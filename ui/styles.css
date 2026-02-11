@@ -1,0 +1,197 @@
+.rpm-overlay {
+  position: fixed;
+  z-index: 999999;
+  width: 280px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.rpm-overlay--top-right {
+  top: 16px;
+  right: 16px;
+}
+
+.rpm-overlay--top-left {
+  top: 16px;
+  left: 16px;
+}
+
+.rpm-overlay--bottom-right {
+  bottom: 16px;
+  right: 16px;
+}
+
+.rpm-overlay--bottom-left {
+  bottom: 16px;
+  left: 16px;
+}
+
+.rpm-overlay--dark {
+  background: rgba(18, 18, 18, 0.92);
+  color: #f5f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.rpm-overlay--light {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1f1f1f;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.rpm-overlay--expanded {
+  width: 360px;
+}
+
+.rpm-stats {
+  padding: 16px;
+}
+
+.rpm-stats__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.rpm-stats__interaction {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rpm-stats__label {
+  font-size: 11px;
+  opacity: 0.65;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rpm-stats__value {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.rpm-stats__value--primary {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rpm-stats__toggle {
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.rpm-overlay--dark .rpm-stats__toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.rpm-overlay--light .rpm-stats__toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.rpm-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rpm-stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rpm-timeline {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 16px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.rpm-overlay--light .rpm-timeline {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.rpm-timeline__heading {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+.rpm-timeline__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rpm-timeline__item {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.rpm-overlay--light .rpm-timeline__item {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.rpm-timeline__item--render {
+  border-left: 3px solid #72d2ff;
+}
+
+.rpm-timeline__item--network {
+  border-left: 3px solid #9cf196;
+}
+
+.rpm-timeline__item--longtask {
+  border-left: 3px solid #f7a76c;
+}
+
+.rpm-timeline__item--interaction {
+  border-left: 3px solid #f1c232;
+}
+
+.rpm-timeline__offset,
+.rpm-timeline__duration {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.rpm-timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rpm-timeline__label {
+  font-size: 12px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.rpm-timeline__detail {
+  font-size: 11px;
+  opacity: 0.6;
+}
