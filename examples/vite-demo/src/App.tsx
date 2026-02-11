@@ -1,120 +1,196 @@
 import { useEffect, useMemo, useState } from "react"
-import axios from "axios"
-import { DevHUD, useAttachAxios } from "react-performance-monitor"
+import { DevHUD, type DevHUDProps } from "react-performance-monitor"
+import BasicInteractions from "./scenarios/BasicInteractions"
+import NetworkStress from "./scenarios/NetworkStress"
+import LongTaskAndFPS from "./scenarios/LongTaskAndFPS"
+import PortalAndSession from "./scenarios/PortalAndSession"
+import type { ScenarioComponentProps } from "./scenarios/types"
 import "./app.css"
 
-const axiosInstance = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
-  timeout: 4000
+type ScenarioDefinition = {
+  id: string
+  title: string
+  description: string
+  observations: string[]
+  Component: React.FC<ScenarioComponentProps>
+  defaultHudConfig?: Partial<DevHUDProps>
+}
+
+const BASE_HUD_CONFIG: Partial<DevHUDProps> = {
+  position: "top-right",
+  theme: "dark",
+  trackNetwork: true,
+  trackLongTasks: true,
+  trackFPS: true,
+  sessionTimeout: 2000
+}
+
+const SCENARIOS: ScenarioDefinition[] = [
+  {
+    id: "basic-interactions",
+    title: "Basic Interactions",
+    description:
+      "Core example covering interaction grouping, component renders, and data fetching.",
+    observations: [
+      "Click “Load users” to see interactions grouped with network & renders.",
+      "Type in the filter to observe React render timings in the HUD timeline.",
+      "Refresh the list to inspect repeated renders and shallow comparisons."
+    ],
+    Component: BasicInteractions,
+    defaultHudConfig: {
+      sessionTimeout: 2000,
+      trackNetwork: true,
+      trackLongTasks: true,
+      trackFPS: true
+    }
+  },
+  {
+    id: "network-stress",
+    title: "Network Stress",
+    description:
+      "Slow and failing requests demonstrate network instrumentation, plus toggling axios interception.",
+    observations: [
+      "Trigger slow and failing requests to compare durations and status codes.",
+      "Detach axios tracking to prove teardown restores the original fetch implementation.",
+      "Watch the timeline differentiate parallel requests."
+    ],
+    Component: NetworkStress,
+    defaultHudConfig: {
+      trackNetwork: true,
+      trackLongTasks: false,
+      trackFPS: false
+    }
+  },
+  {
+    id: "longtask-fps",
+    title: "Long Tasks & FPS",
+    description:
+      "Generate main-thread jank and FPS drops to visualise long task monitoring and performance samples.",
+    observations: [
+      "Fire standalone long tasks to populate the long-task tracker.",
+      "Run the FPS stressor to watch frame rate minimums fluctuate.",
+      "Compare sessions with and without the stressor active."
+    ],
+    Component: LongTaskAndFPS,
+    defaultHudConfig: {
+      trackNetwork: false,
+      trackLongTasks: true,
+      trackFPS: true,
+      sessionTimeout: 1500
+    }
+  },
+  {
+    id: "portal-session",
+    title: "Portals & Session Control",
+    description:
+      "Explore session boundaries, modal/portal interactions, and configurable timeouts.",
+    observations: [
+      "Open the modal to confirm portal interactions retain their rpm identifiers.",
+      "Adjust the session timeout slider to see when sessions close automatically.",
+      "Inspect how renders, long tasks, and network calls merge under shared identifiers."
+    ],
+    Component: PortalAndSession,
+    defaultHudConfig: {
+      sessionTimeout: 2500,
+      trackNetwork: true,
+      trackLongTasks: true,
+      trackFPS: true
+    }
+  }
+]
+
+const deriveHudProps = (config: Partial<DevHUDProps>): Omit<DevHUDProps, "children"> => ({
+  position: config.position ?? "top-right",
+  theme: config.theme ?? "dark",
+  trackNetwork: config.trackNetwork ?? true,
+  trackLongTasks: config.trackLongTasks ?? true,
+  trackFPS: config.trackFPS ?? true,
+  sessionTimeout: config.sessionTimeout ?? 2000
 })
 
-interface User {
-  id: number
-  name: string
-  email: string
-}
+const App = () => {
+  const [activeScenarioId, setActiveScenarioId] = useState<string>(SCENARIOS[0].id)
 
-const PerformanceAdapters = () => {
-  const attachAxios = useAttachAxios()
+  const activeScenario = useMemo(
+    () => SCENARIOS.find(scenario => scenario.id === activeScenarioId) ?? SCENARIOS[0],
+    [activeScenarioId]
+  )
+
+  const [hudConfig, setHudConfig] = useState<Partial<DevHUDProps>>({
+    ...BASE_HUD_CONFIG,
+    ...(activeScenario.defaultHudConfig ?? {})
+  })
 
   useEffect(() => {
-    const detach = attachAxios(axiosInstance)
-    return () => detach()
-  }, [attachAxios])
+    setHudConfig({
+      ...BASE_HUD_CONFIG,
+      ...(activeScenario.defaultHudConfig ?? {})
+    })
+  }, [activeScenarioId, activeScenario])
 
-  return null
-}
-
-const SlowUserList = ({ users, filter }: { users: User[]; filter: string }) => {
-  const filtered = useMemo(() => {
-    const lower = filter.toLowerCase()
-    const start = performance.now()
-    // Artificial CPU work to simulate long renders
-    while (performance.now() - start < 10) {
-      Math.sqrt(Math.random() * Number.MAX_SAFE_INTEGER)
-    }
-    return users.filter(user => user.name.toLowerCase().includes(lower))
-  }, [users, filter])
-
-  if (!users.length) {
-    return <p>No users loaded yet.</p>
+  const updateHudConfig = (config: Partial<DevHUDProps>) => {
+    setHudConfig(previous => ({ ...previous, ...config }))
   }
 
-  return (
-    <ul className="user-list">
-      {filtered.map(user => (
-        <li key={user.id}>
-          <strong>{user.name}</strong>
-          <span>{user.email}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-const DemoDashboard = () => {
-  const [users, setUsers] = useState<User[]>([])
-  const [loading, setLoading] = useState(false)
-  const [filter, setFilter] = useState("")
-  const [error, setError] = useState<string | null>(null)
-
-  const loadUsers = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await axiosInstance.get<User[]>("/users")
-      setUsers(response.data)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error")
-    } finally {
-      setLoading(false)
-    }
+  const resetHudConfig = () => {
+    setHudConfig({
+      ...BASE_HUD_CONFIG,
+      ...(activeScenario.defaultHudConfig ?? {})
+    })
   }
 
+  const hudProps = deriveHudProps(hudConfig)
+  const ScenarioComponent = activeScenario.Component
+
   return (
-    <div className="dashboard" data-rpm-group="demo-dashboard">
-      <header>
+    <div className="app-shell">
+      <aside className="scenario-sidebar">
         <h1>React Performance Monitor Demo</h1>
-        <p>
-          Trigger interactions to see grouped renders, network calls, FPS, and long tasks in the HUD.
-        </p>
-      </header>
+        <p>Select a scenario to explore how the HUD reacts to different performance events.</p>
 
-      <div className="controls">
-        <button
-          type="button"
-          data-rpm-id="load-users"
-          disabled={loading}
-          onClick={loadUsers}
-        >
-          {loading ? "Loading…" : "Load users"}
-        </button>
+        <ul className="scenario-list">
+          {SCENARIOS.map(scenario => {
+            const isActive = scenario.id === activeScenarioId
 
-        <label htmlFor="user-filter">
-          Filter
-          <input
-            id="user-filter"
-            data-rpm-id="filter-users"
-            placeholder="Search by name"
-            value={filter}
-            onChange={event => setFilter(event.target.value)}
+            return (
+              <li key={scenario.id}>
+                <button
+                  type="button"
+                  className={isActive ? "selected" : ""}
+                  onClick={() => setActiveScenarioId(scenario.id)}
+                  aria-current={isActive ? "true" : undefined}
+                >
+                  <span className="scenario-title">{scenario.title}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+
+        <section className="scenario-details">
+          <h2>{activeScenario.title}</h2>
+          <p>{activeScenario.description}</p>
+          <ul>
+            {activeScenario.observations.map(observation => (
+              <li key={observation}>{observation}</li>
+            ))}
+          </ul>
+          <button type="button" className="reset-button" onClick={resetHudConfig}>
+            Reset HUD configuration
+          </button>
+        </section>
+      </aside>
+
+      <main className="scenario-stage">
+        <DevHUD {...hudProps}>
+          <ScenarioComponent
+            hudConfig={hudConfig}
+            onUpdateHudConfig={updateHudConfig}
+            resetHudConfig={resetHudConfig}
           />
-        </label>
-      </div>
-
-      {error ? <div className="error">Failed to load users: {error}</div> : null}
-
-      <SlowUserList users={users} filter={filter} />
+        </DevHUD>
+      </main>
     </div>
-  )
-}
-
-const App = () => {
-  return (
-    <DevHUD position="top-right" theme="dark" trackNetwork trackFPS trackLongTasks>
-      <PerformanceAdapters />
-      <DemoDashboard />
-    </DevHUD>
   )
 }
 
