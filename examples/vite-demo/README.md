@@ -51,4 +51,12 @@ _Goal:_ Demonstrate configurable session windows and interactions inside React p
 - Open the portal modal and trigger submit/cancel flows to confirm identifiers are preserved.
 - Fire the modal fetch to verify network calls from portals are grouped with the interaction.
 
+### 5. Render Load Comparison
+
+_Goal:_ Contrast initial render cost between a clean list and a heavy, collapse-based dataset.
+
+- Toggle between `Render clean list` and `Render heavy list` to capture render durations.
+- Inspect the HUD timeline for long tasks introduced by the 200-item heavy list.
+- Use the FPS and render metrics to decide whether the initial load is acceptable.
+
 Stop the dev server with `Ctrl+C`. Use `npm run build` and `npm run preview` to simulate a production preview of the example itself.

@@ -4,6 +4,7 @@ import BasicInteractions from "./scenarios/BasicInteractions"
 import NetworkStress from "./scenarios/NetworkStress"
 import LongTaskAndFPS from "./scenarios/LongTaskAndFPS"
 import PortalAndSession from "./scenarios/PortalAndSession"
+import RenderLoadComparison from "./scenarios/RenderLoadComparison"
 import type { ScenarioComponentProps } from "./scenarios/types"
 import "./app.css"
 
@@ -95,6 +96,24 @@ const SCENARIOS: ScenarioDefinition[] = [
       trackNetwork: true,
       trackLongTasks: true,
       trackFPS: true
+    }
+  },
+  {
+    id: "render-load",
+    title: "Render Load Comparison",
+    description:
+      "Evaluate initial render cost for lightweight vs. heavy lists and compare timeline metrics.",
+    observations: [
+      "Switch between clean and heavy lists to capture render durations in the metrics panel.",
+      "Inspect long-task entries when the heavy list renders 200 expanded items.",
+      "Use FPS + render stats to discuss whether the initial load is acceptable."
+    ],
+    Component: RenderLoadComparison,
+    defaultHudConfig: {
+      trackNetwork: false,
+      trackLongTasks: true,
+      trackFPS: true,
+      sessionTimeout: 2000
     }
   }
 ]
