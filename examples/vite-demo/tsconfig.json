@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "react-performance-monitor": ["../.."]
+      "react-performance-monitoring": ["../.."]
     },
     "types": ["vite/client"]
   },

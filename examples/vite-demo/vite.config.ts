@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "react-performance-monitor": path.resolve(__dirname, "../..")
+      "react-performance-monitoring": path.resolve(__dirname, "../..")
     }
   },
   server: {

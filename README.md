@@ -1,4 +1,4 @@
-# react-performance-monitor
+# react-performance-monitoring
 
 Developer-focused performance monitoring HUD for React applications. Wrap your app with `DevHUD` to automatically capture user interactions, render timings, network calls, long tasks, and FPS in development builds.
 
@@ -14,15 +14,15 @@ Developer-focused performance monitoring HUD for React applications. Wrap your a
 ## Installation
 
 ```bash
-npm install react-performance-monitor
+npm install react-performance-monitoring
 # or
-yarn add react-performance-monitor
+yarn add react-performance-monitoring
 ```
 
 ## Quick start
 
 ```tsx
-import { DevHUD } from "react-performance-monitor"
+import { DevHUD } from "react-performance-monitoring"
 
 function AppRoot() {
   return (
@@ -62,7 +62,7 @@ Assign human-friendly identifiers to interactive elements:
 ```tsx
 import { useEffect } from "react"
 import axios from "axios"
-import { useAttachAxios } from "react-performance-monitor"
+import { useAttachAxios } from "react-performance-monitoring"
 
 const axiosInstance = axios.create()
 

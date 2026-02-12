@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { DevHUD, type DevHUDProps } from "react-performance-monitor"
+import { DevHUD, type DevHUDProps } from "react-performance-monitoring"
 import BasicInteractions from "./scenarios/BasicInteractions"
 import NetworkStress from "./scenarios/NetworkStress"
 import LongTaskAndFPS from "./scenarios/LongTaskAndFPS"

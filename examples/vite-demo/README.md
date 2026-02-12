@@ -1,6 +1,6 @@
 # React Performance Monitor Vite Demo
 
-This demo showcases `DevHUD` across multiple focused scenarios. It bundles a local copy of `react-performance-monitor` via `file:../..`, so build the package before running the app.
+This demo showcases `DevHUD` across multiple focused scenarios. It bundles a local copy of `react-performance-monitoring` via `file:../..`, so build the package before running the app.
 
 ## Getting started
 

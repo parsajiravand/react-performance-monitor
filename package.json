@@ -1,5 +1,5 @@
 {
-  "name": "react-performance-monitor",
+  "name": "react-performance-monitoring",
   "version": "0.1.0",
   "description": "Developer-focused performance monitoring HUD for React applications.",
   "keywords": [
@@ -7,13 +7,25 @@
     "performance",
     "profiler",
     "devtools",
-    "hud"
+    "hud",
+    "performance-monitoring",
+    "next",
+    "lighthouse",
+    "react-devtools",
+    "react-profiler",
+    "react-performance",
+    "react-performance-monitoring",
+    "react-performance-monitoring-hud",
+    "react-performance-monitoring-profiler",
+    "react-performance-monitoring-lighthouse",
+    "react-performance-monitoring-devtools",
+    "react-performance-monitoring-react-devtools"
   ],
   "license": "MIT",
   "author": "",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/parsajiravand/react-performance-monitor"
   },
   "type": "module",
   "main": "dist/index.cjs",

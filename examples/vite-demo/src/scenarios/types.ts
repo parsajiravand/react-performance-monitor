@@ -1,4 +1,4 @@
-import type { DevHUDProps } from "react-performance-monitor"
+import type { DevHUDProps } from "react-performance-monitoring"
 
 export interface ScenarioComponentProps {
   hudConfig: Partial<DevHUDProps>

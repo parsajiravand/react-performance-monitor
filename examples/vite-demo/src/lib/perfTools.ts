@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import axios, { type AxiosInstance } from "axios"
-import { useAttachAxios } from "react-performance-monitor"
+import { useAttachAxios } from "react-performance-monitoring"
 
 export const axiosInstance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com",

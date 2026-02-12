@@ -1,3 +1,3 @@
-Example integration projects for `react-performance-monitor`.
+Example integration projects for `react-performance-monitoring`.
 
 - `vite-demo/` – Vite + React 18 dashboard that exercises DevHUD with fetch requests, long renders, and FPS monitoring.
