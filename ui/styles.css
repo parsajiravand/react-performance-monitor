@@ -1,15 +1,171 @@
 .rpm-overlay {
   position: fixed;
   z-index: 999999;
-  width: 280px;
+  width: 300px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 12px;
   line-height: 1.4;
-  border-radius: 10px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24), 0 0 1px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.rpm-overlay--collapsed {
+  width: auto;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: none;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+}
+
+.rpm-overlay--collapsed:hover {
+  opacity: 0.9;
+}
+
+.rpm-collapsed__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+.rpm-overlay__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.rpm-overlay--light .rpm-overlay__header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.rpm-overlay__title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.rpm-overlay__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rpm-position-picker {
+  display: flex;
+  gap: 2px;
+}
+
+.rpm-position-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.rpm-position-btn:hover {
+  opacity: 0.85;
+}
+
+.rpm-overlay--dark .rpm-position-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rpm-overlay--light .rpm-position-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.rpm-position-btn--active {
+  opacity: 1;
+}
+
+.rpm-overlay--dark .rpm-position-btn--active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.rpm-overlay--light .rpm-position-btn--active {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.rpm-position-icon {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid currentColor;
+  border-radius: 1px;
+}
+
+.rpm-position-icon--top-left {
+  border-right: none;
+  border-bottom: none;
+}
+
+.rpm-position-icon--top-right {
+  border-left: none;
+  border-bottom: none;
+}
+
+.rpm-position-icon--bottom-left {
+  border-right: none;
+  border-top: none;
+}
+
+.rpm-position-icon--bottom-right {
+  border-left: none;
+  border-top: none;
+}
+
+.rpm-overlay__collapse {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.rpm-overlay__collapse:hover {
+  opacity: 1;
+}
+
+.rpm-overlay--dark .rpm-overlay__collapse:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.rpm-overlay--light .rpm-overlay__collapse:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.rpm-overlay__collapse-icon {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 300;
 }
 
 .rpm-overlay--top-right {
@@ -33,23 +189,23 @@
 }
 
 .rpm-overlay--dark {
-  background: rgba(18, 18, 18, 0.92);
-  color: #f5f5f5;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(15, 15, 18, 0.94);
+  color: #f0f0f2;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .rpm-overlay--light {
-  background: rgba(255, 255, 255, 0.95);
-  color: #1f1f1f;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.09);
 }
 
 .rpm-overlay--expanded {
-  width: 360px;
+  width: 380px;
 }
 
 .rpm-stats {
-  padding: 16px;
+  padding: 14px 16px;
 }
 
 .rpm-stats__header {
@@ -104,7 +260,7 @@
 .rpm-stats__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px 14px;
 }
 
 .rpm-stats__item {

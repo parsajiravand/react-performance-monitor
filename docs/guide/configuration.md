@@ -31,7 +31,7 @@
 
 ## Position
 
-Controls where the HUD overlay appears:
+Controls where the HUD overlay appears. You can also **change position at runtime** using the corner icons in the panel header:
 
 - `top-left`
 - `top-right`

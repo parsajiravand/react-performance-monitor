@@ -6,9 +6,12 @@ import StatsPanel, { type StatsSummary } from "./StatsPanel"
 import TimelinePanel from "./TimelinePanel"
 import "./styles.css"
 
+const POSITIONS: HUDPosition[] = ["top-left", "top-right", "bottom-left", "bottom-right"]
+
 export interface OverlayProps {
   position: HUDPosition
   theme: HUDTheme
+  onPositionChange?: (position: HUDPosition) => void
 }
 
 const getNow = (): number =>
@@ -52,9 +55,10 @@ const computeSummary = (session: PerformanceSession | undefined, fps: number | n
   }
 }
 
-const Overlay = ({ position, theme }: OverlayProps) => {
+const Overlay = ({ position, theme, onPositionChange }: OverlayProps) => {
   const state = usePerformanceState()
   const [isExpanded, setExpanded] = useState(false)
+  const [isCollapsed, setCollapsed] = useState(false)
 
   const activeSession = useMemo<PerformanceSession | undefined>(() => {
     if (!state.sessions.length) {
@@ -79,6 +83,25 @@ const Overlay = ({ position, theme }: OverlayProps) => {
     }
   }, [activeSession, isExpanded])
 
+  if (isCollapsed) {
+    return (
+      <button
+        type="button"
+        className={[
+          "rpm-overlay",
+          "rpm-overlay--collapsed",
+          `rpm-overlay--${position}`,
+          `rpm-overlay--${theme}`
+        ].join(" ")}
+        onClick={() => setCollapsed(false)}
+        title="Open performance monitor"
+        aria-label="Open performance monitor"
+      >
+        <span className="rpm-collapsed__label">RPM</span>
+      </button>
+    )
+  }
+
   return (
     <div
       className={[
@@ -90,6 +113,37 @@ const Overlay = ({ position, theme }: OverlayProps) => {
         .filter(Boolean)
         .join(" ")}
     >
+      <div className="rpm-overlay__header">
+        <span className="rpm-overlay__title">Performance</span>
+        <div className="rpm-overlay__actions">
+          {onPositionChange ? (
+            <div className="rpm-position-picker" role="group" aria-label="Panel position">
+              {POSITIONS.map(pos => (
+                <button
+                  key={pos}
+                  type="button"
+                  className={`rpm-position-btn ${position === pos ? "rpm-position-btn--active" : ""}`}
+                  onClick={() => onPositionChange(pos)}
+                  title={`Move to ${pos.replace("-", " ")}`}
+                  aria-pressed={position === pos}
+                  aria-label={`Move to ${pos.replace("-", " ")}`}
+                >
+                  <span className={`rpm-position-icon rpm-position-icon--${pos}`} aria-hidden />
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <button
+            type="button"
+            className="rpm-overlay__collapse"
+            onClick={() => setCollapsed(true)}
+            title="Collapse panel"
+            aria-label="Collapse panel"
+          >
+            <span className="rpm-overlay__collapse-icon" aria-hidden>×</span>
+          </button>
+        </div>
+      </div>
       <StatsPanel summary={summary} isExpanded={isExpanded} onToggleExpand={() => setExpanded(x => !x)} />
       {isExpanded && activeSession ? <TimelinePanel session={activeSession} /> : null}
     </div>

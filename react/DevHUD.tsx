@@ -73,6 +73,11 @@ export const DevHUD = ({
   const sessionManagerRef = useRef<SessionManager | null>(null)
   const attachAxiosRef = useRef<(instance: AxiosLikeInstance) => TrackerCleanup>(noOpAttachAxios())
   const [overlayNode, setOverlayNode] = useState<HTMLElement | null>(null)
+  const [hudPosition, setHudPosition] = useState(position)
+
+  useEffect(() => {
+    setHudPosition(position)
+  }, [position])
 
   useEffect(() => {
     if (!isEnabled) {
@@ -160,7 +165,16 @@ export const DevHUD = ({
       <ProfilerWrapper id="RPMRoot" onRender={handleRender}>
         {children}
       </ProfilerWrapper>
-      {overlayNode ? createPortal(<Overlay position={position} theme={theme} />, overlayNode) : null}
+      {overlayNode
+        ? createPortal(
+            <Overlay
+              position={hudPosition}
+              theme={theme}
+              onPositionChange={setHudPosition}
+            />,
+            overlayNode
+          )
+        : null}
     </PerformanceMonitorProvider>
   )
 }

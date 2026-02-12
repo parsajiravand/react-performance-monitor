@@ -31,6 +31,8 @@ import { DevHUD } from "react-performance-monitoring"
 
 ## Behavior
 
+- **Collapsible**: Click × to fully collapse the panel; a small "RPM" tab remains to re-open it.
+- **Repositionable**: Use the corner icons in the panel header to move the HUD to any corner at runtime.
 - **Dev-only**: When `NODE_ENV === "production"` and `forceEnabled` is not set, `DevHUD` renders only `children`; no overlay or trackers are mounted.
 - **SSR-safe**: If `window` is undefined (e.g. during SSR), it behaves as in production.
 - **Profiler wrapper**: Children are wrapped in a React `Profiler` so render timings are captured.

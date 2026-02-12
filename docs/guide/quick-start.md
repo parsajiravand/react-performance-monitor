@@ -26,7 +26,9 @@ In development, a floating HUD appears (default: top-right, dark theme) showing:
 - **Long Tasks** – Count of main-thread blocking tasks
 - **FPS** – Current and minimum frame rate
 
-Click **Open Timeline** to see a per-event breakdown (renders, network, long tasks) ordered by time.
+- **Collapse** – Click the × button to fully close the panel; a minimal "RPM" tab remains to re-open it
+- **Reposition** – Use the corner icons in the header to move the panel to any corner
+- **Timeline** – Click **Open Timeline** to see a per-event breakdown (renders, network, long tasks) ordered by time
 
 ## What Happens Under the Hood
 
