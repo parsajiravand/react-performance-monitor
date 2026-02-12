@@ -2,6 +2,8 @@
 
 This demo showcases `DevHUD` across multiple focused scenarios. It bundles a local copy of `react-performance-monitoring` via `file:../..`, so build the package before running the app.
 
+**[Try the live demo →](https://react-performance-monitoring-demo.netlify.app/)** · [Documentation](https://react-performance-monitoring.netlify.app/) · [npm](https://www.npmjs.com/package/react-performance-monitoring) · [GitHub](https://github.com/parsajiravand/react-performance-monitor)
+
 ## Getting started
 
 ```bash

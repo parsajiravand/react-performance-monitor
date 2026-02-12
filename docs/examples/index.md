@@ -1,8 +1,10 @@
 # Examples
 
-A live Vite demo is available in the repository. It showcases five scenarios that exercise different aspects of the HUD. [Browse scenario sources](https://github.com/parsajiravand/react-performance-monitor/tree/master/examples/vite-demo/src/scenarios)
+**[Try the Live Demo →](https://react-performance-monitoring-demo.netlify.app/)**
 
-## Running the Demo
+A live Vite demo showcases five scenarios that exercise different aspects of the HUD. [Browse scenario sources](https://github.com/parsajiravand/react-performance-monitor/tree/master/examples/vite-demo/src/scenarios)
+
+## Running the Demo Locally
 
 From the repository root:
 

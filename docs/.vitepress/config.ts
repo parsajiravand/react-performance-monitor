@@ -11,7 +11,8 @@ export default defineConfig({
       { text: "Frameworks", link: "/guides/vite" },
       { text: "API", link: "/api/devhud" },
       { text: "Examples", link: "/examples/" },
-      { text: "FAQ", link: "/faq" }
+      { text: "FAQ", link: "/faq" },
+      { text: "Live Demo", link: "https://react-performance-monitoring-demo.netlify.app/", target: "_blank" }
     ],
     sidebar: {
       "/guide/": [

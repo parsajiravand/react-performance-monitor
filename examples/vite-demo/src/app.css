@@ -48,6 +48,25 @@ body {
   font-size: 14px;
 }
 
+.scenario-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.scenario-links a {
+  font-size: 12px;
+  color: rgba(56, 189, 248, 0.9);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.scenario-links a:hover {
+  color: #38bdf8;
+  text-decoration: underline;
+}
+
 .scenario-list {
   list-style: none;
   margin: 0;

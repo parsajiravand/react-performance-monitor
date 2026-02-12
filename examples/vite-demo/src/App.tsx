@@ -10,6 +10,7 @@ import "./app.css"
 
 const SOURCE_BASE =
   "https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios"
+const DOCS_URL = "https://react-performance-monitoring.netlify.app/"
 
 type ScenarioDefinition = {
   id: string
@@ -175,7 +176,25 @@ const App = () => {
       <aside className="scenario-sidebar">
         <h1>React Performance Monitor Demo</h1>
         <p>Select a scenario to explore how the HUD reacts to different performance events.</p>
-
+        <div className="scenario-links">
+          <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
+            Documentation
+          </a>
+          <a
+            href="https://www.npmjs.com/package/react-performance-monitoring"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            npm
+          </a>
+          <a
+            href="https://github.com/parsajiravand/react-performance-monitor"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
         <ul className="scenario-list">
           {SCENARIOS.map(scenario => {
             const isActive = scenario.id === activeScenarioId

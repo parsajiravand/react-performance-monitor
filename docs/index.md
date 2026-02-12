@@ -2,6 +2,8 @@
 
 Developer-focused performance monitoring HUD for React applications. Wrap your app with `DevHUD` to automatically capture user interactions, render timings, network calls, long tasks, and FPS in development builds.
 
+**[Live Demo](https://react-performance-monitoring-demo.netlify.app/)** · [npm](https://www.npmjs.com/package/react-performance-monitoring) · [GitHub](https://github.com/parsajiravand/react-performance-monitor)
+
 ## Features
 
 - **Zero-config** – Works out of the box; wrap your app and start observing
@@ -44,3 +46,4 @@ A floating HUD appears in development, showing Last Interaction, Total Time, API
 - [Configuration](/guide/configuration) – Position, theme, toggles, session timeout
 - [Tracking Tags](/guide/tracking-tags) – Automatic resolution and `data-rpm-id` / `data-rpm-group`
 - [API Reference](/api/devhud) – DevHUD, hooks, and types
+- [Examples](/examples/) – Scenario walkthroughs and code samples

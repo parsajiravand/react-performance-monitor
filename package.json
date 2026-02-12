@@ -1,6 +1,6 @@
 {
   "name": "react-performance-monitoring",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Developer-focused performance monitoring HUD for React applications.",
   "keywords": [
     "react",

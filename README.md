@@ -2,6 +2,8 @@
 
 Developer-focused performance monitoring HUD for React applications. Wrap your app with `DevHUD` to automatically capture user interactions, render timings, network calls, long tasks, and FPS in development builds.
 
+**Links:** [Documentation](https://react-performance-monitoring.netlify.app/) · [Live Demo](https://react-performance-monitoring-demo.netlify.app/) · [npm](https://www.npmjs.com/package/react-performance-monitoring) · [GitHub](https://github.com/parsajiravand/react-performance-monitor)
+
 ## Features
 
 - Zero-config React Dev HUD with floating performance overlay
@@ -99,4 +101,6 @@ export function AppRoot() {
 Example integrations for CRA, Vite, and Next.js live under `examples/`.
 Current demos:
 
-- `examples/vite-demo` – Vite-powered dashboard showcasing grouped interactions, axios integration, and HUD timeline.
+- [**Live Demo**](https://react-performance-monitoring-demo.netlify.app/) – Try it in the browser
+- [**Documentation**](https://react-performance-monitoring.netlify.app/) – Full guide, API reference, examples
+- `examples/vite-demo` – Vite-powered dashboard showcasing grouped interactions, axios integration, and HUD timeline

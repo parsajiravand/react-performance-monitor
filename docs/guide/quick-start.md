@@ -51,6 +51,7 @@ For explicit labels, use `data-rpm-id` or `data-rpm-group`. See [Tracking Tags](
 
 ## Next Steps
 
+- [Live Demo](https://react-performance-monitoring-demo.netlify.app/) – Try it in the browser
 - [Configuration](/guide/configuration) – Position, theme, toggles
 - [Axios Integration](/guide/axios-integration) – Track axios requests
 - [Examples](/examples/) – Live demo and code samples
