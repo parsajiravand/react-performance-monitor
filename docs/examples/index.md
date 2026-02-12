@@ -1,6 +1,6 @@
 # Examples
 
-A live Vite demo is available in the repository. It showcases five scenarios that exercise different aspects of the HUD.
+A live Vite demo is available in the repository. It showcases five scenarios that exercise different aspects of the HUD. [Browse scenario sources](https://github.com/parsajiravand/react-performance-monitor/tree/master/examples/vite-demo/src/scenarios)
 
 ## Running the Demo
 
@@ -20,6 +20,8 @@ The demo runs at `http://localhost:5174` when started locally. Use the sidebar t
 ---
 
 ## 1. Basic Interactions
+
+[**View source**](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/BasicInteractions.tsx)
 
 **Goal:** Interaction grouping, render timings, and simple data fetches. IDs are resolved automatically from button text, `id`, and `placeholder`—no `data-rpm-id` needed.
 
@@ -41,6 +43,8 @@ The demo runs at `http://localhost:5174` when started locally. Use the sidebar t
 ---
 
 ## 2. Network Stress
+
+[**View source**](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/NetworkStress.tsx)
 
 **Goal:** Slow, failing, and timed-out requests; axios attach/detach.
 
@@ -68,6 +72,8 @@ useEffect(() => {
 
 ## 3. Long Tasks & FPS
 
+[**View source**](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/LongTaskAndFPS.tsx)
+
 **Goal:** Main-thread jank and frame-rate sampling.
 
 ### Actions
@@ -93,6 +99,8 @@ setTimeout(heavyWork, 0)
 
 ## 4. Portals & Session Control
 
+[**View source**](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/PortalAndSession.tsx)
+
 **Goal:** Configurable session windows; interactions inside React portals.
 
 ### Actions
@@ -116,6 +124,8 @@ setTimeout(heavyWork, 0)
 ---
 
 ## 5. Render Load Comparison
+
+[**View source**](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/RenderLoadComparison.tsx)
 
 **Goal:** Initial render cost: lightweight vs. heavy list.
 
@@ -143,3 +153,5 @@ examples/
     │   └── lib/perfTools.ts  # Shared helpers (axios, stressor)
     └── package.json
 ```
+
+**Scenario sources:** [BasicInteractions.tsx](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/BasicInteractions.tsx) · [NetworkStress.tsx](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/NetworkStress.tsx) · [LongTaskAndFPS.tsx](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/LongTaskAndFPS.tsx) · [PortalAndSession.tsx](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/PortalAndSession.tsx) · [RenderLoadComparison.tsx](https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios/RenderLoadComparison.tsx)

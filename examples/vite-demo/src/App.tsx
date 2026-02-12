@@ -8,10 +8,14 @@ import RenderLoadComparison from "./scenarios/RenderLoadComparison"
 import type { ScenarioComponentProps } from "./scenarios/types"
 import "./app.css"
 
+const SOURCE_BASE =
+  "https://github.com/parsajiravand/react-performance-monitor/blob/master/examples/vite-demo/src/scenarios"
+
 type ScenarioDefinition = {
   id: string
   title: string
   description: string
+  sourceFile: string
   observations: string[]
   Component: React.FC<ScenarioComponentProps>
   defaultHudConfig?: Partial<DevHUDProps>
@@ -32,6 +36,7 @@ const SCENARIOS: ScenarioDefinition[] = [
     title: "Basic Interactions",
     description:
       "Core example covering interaction grouping, component renders, and data fetching.",
+    sourceFile: "BasicInteractions.tsx",
     observations: [
       "Click “Load users” to see interactions grouped with network & renders.",
       "Type in the filter to observe React render timings in the HUD timeline.",
@@ -50,6 +55,7 @@ const SCENARIOS: ScenarioDefinition[] = [
     title: "Network Stress",
     description:
       "Slow and failing requests demonstrate network instrumentation, plus toggling axios interception.",
+    sourceFile: "NetworkStress.tsx",
     observations: [
       "Trigger slow and failing requests to compare durations and status codes.",
       "Detach axios tracking to prove teardown restores the original fetch implementation.",
@@ -67,6 +73,7 @@ const SCENARIOS: ScenarioDefinition[] = [
     title: "Long Tasks & FPS",
     description:
       "Generate main-thread jank and FPS drops to visualise long task monitoring and performance samples.",
+    sourceFile: "LongTaskAndFPS.tsx",
     observations: [
       "Fire standalone long tasks to populate the long-task tracker.",
       "Run the FPS stressor to watch frame rate minimums fluctuate.",
@@ -85,6 +92,7 @@ const SCENARIOS: ScenarioDefinition[] = [
     title: "Portals & Session Control",
     description:
       "Explore session boundaries, modal/portal interactions, and configurable timeouts.",
+    sourceFile: "PortalAndSession.tsx",
     observations: [
       "Open the modal to confirm portal interactions retain their rpm identifiers.",
       "Adjust the session timeout slider to see when sessions close automatically.",
@@ -103,6 +111,7 @@ const SCENARIOS: ScenarioDefinition[] = [
     title: "Render Load Comparison",
     description:
       "Evaluate initial render cost for lightweight vs. heavy lists and compare timeline metrics.",
+    sourceFile: "RenderLoadComparison.tsx",
     observations: [
       "Switch between clean and heavy lists to capture render durations in the metrics panel.",
       "Inspect long-task entries when the heavy list renders 200 expanded items.",
@@ -170,9 +179,10 @@ const App = () => {
         <ul className="scenario-list">
           {SCENARIOS.map(scenario => {
             const isActive = scenario.id === activeScenarioId
+            const sourceUrl = `${SOURCE_BASE}/${scenario.sourceFile}`
 
             return (
-              <li key={scenario.id}>
+              <li key={scenario.id} className="scenario-tab">
                 <button
                   type="button"
                   className={isActive ? "selected" : ""}
@@ -181,6 +191,16 @@ const App = () => {
                 >
                   <span className="scenario-title">{scenario.title}</span>
                 </button>
+                <a
+                  href={sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="scenario-source-link"
+                  title={`View ${scenario.sourceFile} on GitHub`}
+                  onClick={e => e.stopPropagation()}
+                >
+                  View source
+                </a>
               </li>
             )
           })}
@@ -188,6 +208,14 @@ const App = () => {
 
         <section className="scenario-details">
           <h2>{activeScenario.title}</h2>
+          <a
+            href={`${SOURCE_BASE}/${activeScenario.sourceFile}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="scenario-source-link scenario-source-link--detail"
+          >
+            View source: {activeScenario.sourceFile}
+          </a>
           <p>{activeScenario.description}</p>
           <ul>
             {activeScenario.observations.map(observation => (

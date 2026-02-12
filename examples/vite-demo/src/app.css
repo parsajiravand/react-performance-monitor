@@ -57,6 +57,31 @@ body {
   gap: 12px;
 }
 
+.scenario-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scenario-source-link {
+  font-size: 11px;
+  color: rgba(56, 189, 248, 0.85);
+  text-decoration: none;
+  padding-left: 2px;
+  transition: color 0.2s ease;
+}
+
+.scenario-source-link:hover {
+  color: #38bdf8;
+  text-decoration: underline;
+}
+
+.scenario-source-link--detail {
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
 .scenario-list button {
   width: 100%;
   border: 1px solid transparent;
