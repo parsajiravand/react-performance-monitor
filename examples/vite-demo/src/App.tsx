@@ -148,7 +148,7 @@ const App = () => {
   }, [activeScenarioId, activeScenario])
 
   const updateHudConfig = (config: Partial<DevHUDProps>) => {
-    setHudConfig(previous => ({ ...previous, ...config }))
+    setHudConfig((previous: Partial<DevHUDProps>) => ({ ...previous, ...config }))
   }
 
   const resetHudConfig = () => {

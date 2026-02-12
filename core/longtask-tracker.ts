@@ -12,12 +12,10 @@ export const createLongTaskTracker = (
     return () => {}
   }
 
-  const win = options.windowRef ?? window
-
   type PerformanceLongTaskEntry = PerformanceEntry & { attribution?: LongTaskAttribution[] }
 
-  const observer = new win.PerformanceObserver(list => {
-    list.getEntries().forEach(entry => {
+  const observer = new PerformanceObserver((list: PerformanceObserverEntryList) => {
+    list.getEntries().forEach((entry: PerformanceEntry) => {
       if (entry.entryType !== "longtask") {
         return
       }

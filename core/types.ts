@@ -4,7 +4,7 @@ export interface RenderEntry {
   baseDuration: number
   startTime: number
   commitTime: number
-  phase: "mount" | "update"
+  phase: "mount" | "update" | "nested-update"
 }
 
 export interface NetworkEntry {
