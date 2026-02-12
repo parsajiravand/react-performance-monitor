@@ -12,6 +12,7 @@
 | `trackLongTasks` | `boolean` | `true` | Enable long-task monitoring |
 | `trackFPS` | `boolean` | `true` | Enable FPS sampling |
 | `sessionTimeout` | `number` | `2000` | Inactivity timeout (ms) before session closes |
+| `forceEnabled` | `boolean` | `false` | Show HUD regardless of `NODE_ENV`. Use for deployed demos. |
 
 ## Example
 
@@ -55,6 +56,18 @@ Disable individual trackers to reduce overhead or focus on specific metrics:
   <App />
 </DevHUD>
 ```
+
+## forceEnabled (Deployed Demos)
+
+By default, the HUD is hidden in production (`NODE_ENV === "production"`). For deployed demos or previews where you want the HUD visible, pass `forceEnabled`:
+
+```tsx
+<DevHUD forceEnabled>
+  <App />
+</DevHUD>
+```
+
+Use this only for demo/preview builds—do not enable in production apps serving end users.
 
 ## Session Timeout
 

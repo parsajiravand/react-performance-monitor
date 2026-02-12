@@ -11,4 +11,6 @@ export interface DevHUDProps {
   trackLongTasks?: boolean
   trackFPS?: boolean
   sessionTimeout?: number
+  /** When true, show the HUD regardless of NODE_ENV. Use for deployed demos/previews. */
+  forceEnabled?: boolean
 }

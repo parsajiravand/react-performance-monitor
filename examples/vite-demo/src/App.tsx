@@ -229,7 +229,7 @@ const App = () => {
       </aside>
 
       <main className="scenario-stage">
-        <DevHUD {...hudProps}>
+        <DevHUD {...hudProps} forceEnabled>
           <ScenarioComponent
             hudConfig={hudConfig}
             onUpdateHudConfig={updateHudConfig}

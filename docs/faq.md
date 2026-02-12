@@ -29,6 +29,25 @@ Check:
 1. **Environment** – Are you running in development? (`NODE_ENV` should not be `"production"`.)
 2. **Browser** – The package requires `window` and `document`; it won't run during SSR.
 3. **Build** – If using a custom build, ensure `NODE_ENV` is set correctly for dev.
+4. **Deployed demo** – For production builds where you want the HUD (e.g. a live demo), use `forceEnabled`:
+
+   ```tsx
+   <DevHUD forceEnabled>
+     <App />
+   </DevHUD>
+   ```
+
+## How do I deploy the demo with the HUD visible?
+
+Production builds set `NODE_ENV=production`, so the HUD is hidden by default. For a deployed demo or preview, pass `forceEnabled` to `DevHUD`:
+
+```tsx
+<DevHUD forceEnabled>
+  <DemoApp />
+</DevHUD>
+```
+
+The example app in `examples/vite-demo` uses this so the HUD appears when deployed to Netlify, Vercel, etc.
 
 ## Does it patch fetch? Will it break my app?
 

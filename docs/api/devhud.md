@@ -27,10 +27,11 @@ import { DevHUD } from "react-performance-monitoring"
 | `trackLongTasks` | `boolean` | `true` | No | Enable long-task monitoring |
 | `trackFPS` | `boolean` | `true` | No | Enable FPS sampling |
 | `sessionTimeout` | `number` | `2000` | No | Inactivity timeout (ms) before session closes |
+| `forceEnabled` | `boolean` | `false` | No | Show HUD regardless of `NODE_ENV`. Use for deployed demos/previews. |
 
 ## Behavior
 
-- **Dev-only**: When `NODE_ENV === "production"`, `DevHUD` renders only `children`; no overlay or trackers are mounted.
+- **Dev-only**: When `NODE_ENV === "production"` and `forceEnabled` is not set, `DevHUD` renders only `children`; no overlay or trackers are mounted.
 - **SSR-safe**: If `window` is undefined (e.g. during SSR), it behaves as in production.
 - **Profiler wrapper**: Children are wrapped in a React `Profiler` so render timings are captured.
 - **Portal**: The HUD is rendered via `createPortal` into a dedicated container (`[data-rpm-root]`) appended to `document.body`.

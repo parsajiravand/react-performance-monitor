@@ -51,10 +51,11 @@ export const DevHUD = ({
   trackNetwork = true,
   trackLongTasks = true,
   trackFPS = true,
-  sessionTimeout = 2000
+  sessionTimeout = 2000,
+  forceEnabled = false
 }: DevHUDProps) => {
   const isBrowser = typeof window !== "undefined"
-  const isEnabled = isBrowser && isDevelopmentEnvironment()
+  const isEnabled = isBrowser && (forceEnabled || isDevelopmentEnvironment())
 
   const storeRef = useRef<PerformanceStore | null>(null)
   if (!storeRef.current) {

@@ -138,6 +138,7 @@ interface DevHUDProps {
   trackLongTasks?: boolean
   trackFPS?: boolean
   sessionTimeout?: number
+  forceEnabled?: boolean
 }
 ```
 
