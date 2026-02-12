@@ -5,9 +5,19 @@ import path from "node:path"
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      "react-performance-monitoring": path.resolve(__dirname, "../..")
-    }
+    alias: [
+      {
+        find: "react-performance-monitoring",
+        replacement: path.resolve(__dirname, "../..")
+      },
+      {
+        find: /^react-dom$/,
+        replacement: path.resolve(__dirname, "node_modules/react-dom/profiling.js")
+      }
+    ]
+  },
+  define: {
+    "process.env.RPM_FORCE_ENABLED": JSON.stringify("true")
   },
   server: {
     port: 5174

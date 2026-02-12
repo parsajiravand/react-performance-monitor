@@ -39,15 +39,39 @@ Check:
 
 ## How do I deploy the demo with the HUD visible?
 
-Production builds set `NODE_ENV=production`, so the HUD is hidden by default. For a deployed demo or preview, pass `forceEnabled` to `DevHUD`:
+Production builds set `NODE_ENV=production`, so the HUD is hidden by default. Use both:
 
-```tsx
-<DevHUD forceEnabled>
-  <DemoApp />
-</DevHUD>
+1. **`forceEnabled` prop** – Pass it to `DevHUD`:
+
+   ```tsx
+   <DevHUD forceEnabled>
+     <DemoApp />
+   </DevHUD>
+   ```
+
+2. **Vite define** (if using Vite) – Add to `vite.config.ts` so the HUD stays enabled in production bundles:
+
+   ```ts
+   define: {
+     "process.env.RPM_FORCE_ENABLED": JSON.stringify("true")
+   }
+   ```
+
+The example app in `examples/vite-demo` uses both so the HUD appears when deployed to Netlify, Vercel, etc.
+
+### Renders show 0 in production Timeline
+
+React's `<Profiler>` `onRender` callback is disabled in production builds by default. To capture render timings in a deployed demo, use React's profiling build. In Vite, add to `vite.config.ts`:
+
+```ts
+resolve: {
+  alias: {
+    "react-dom$": "react-dom/profiling"
+  }
+}
 ```
 
-The example app in `examples/vite-demo` uses this so the HUD appears when deployed to Netlify, Vercel, etc.
+This enables the Profiler in production at the cost of minor overhead. The demo's Vite config includes this alias so the Timeline shows renders when deployed.
 
 ## Does it patch fetch? Will it break my app?
 

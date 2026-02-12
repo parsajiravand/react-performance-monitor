@@ -23,6 +23,11 @@ const isDevelopmentEnvironment = (): boolean => {
   return true
 }
 
+/** Set by bundler define (e.g. Vite) when building demo for deployment */
+const isForceEnabledByBuild = (): boolean =>
+  typeof process !== "undefined" &&
+  (process.env as Record<string, string>).RPM_FORCE_ENABLED === "true"
+
 const noOpAttachAxios =
   (): ((instance: AxiosLikeInstance) => TrackerCleanup) =>
   () =>
@@ -55,7 +60,9 @@ export const DevHUD = ({
   forceEnabled = false
 }: DevHUDProps) => {
   const isBrowser = typeof window !== "undefined"
-  const isEnabled = isBrowser && (forceEnabled || isDevelopmentEnvironment())
+  const isEnabled =
+    isBrowser &&
+    (forceEnabled || isForceEnabledByBuild() || isDevelopmentEnvironment())
 
   const storeRef = useRef<PerformanceStore | null>(null)
   if (!storeRef.current) {
