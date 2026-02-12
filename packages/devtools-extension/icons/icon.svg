@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" fill="#667eea"/>
+  <circle cx="64" cy="64" r="50" fill="#4ade80" opacity="0.8"/>
+  <text x="64" y="75" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="32" font-weight="bold">RPM</text>
+</svg>

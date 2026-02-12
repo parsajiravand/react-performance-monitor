@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RPM DevTools Extension Test Summary</title>
+    <style>
+      body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+      .test-section { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+      .test-title { color: #007acc; font-weight: 600; margin-bottom: 10px; }
+      .code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+      .success { color: #28a745; }
+      .warning { color: #ffc107; }
+      .error { color: #dc3545; }
+      ol { line-height: 1.6; }
+      li { margin-bottom: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>RPM DevTools Extension Test Summary</h1>
+
+    <div class="test-section">
+      <div class="test-title">🎯 Quick Test (Recommended)</div>
+      <ol>
+        <li>Open <code>test-cdn.html</code> in Chrome</li>
+        <li>Open DevTools (F12) → Click "RPM" tab</li>
+        <li>Interact with the test app buttons</li>
+        <li>Watch live performance data appear</li>
+      </ol>
+      <p><strong>Expected:</strong> Real-time events in timeline, filter controls work, export button downloads JSON</p>
+    </div>
+
+    <div class="test-section">
+      <div class="test-title">🔧 Manual Testing Checklist</div>
+      <ul>
+        <li><strong class="success">✓</strong> Extension loads without errors</li>
+        <li><strong class="success">✓</strong> RPM DevTools tab appears in DevTools</li>
+        <li><strong class="success">✓</strong> Panel shows "No performance data yet" initially</li>
+        <li><strong class="success">✓</strong> Interacting with app generates events</li>
+        <li><strong class="success">✓</strong> Timeline shows visual bars for events</li>
+        <li><strong class="success">✓</strong> Filter dropdown changes visible events</li>
+        <li><strong class="success">✓</strong> Pause/Resume button controls recording</li>
+        <li><strong class="success">✓</strong> Clear button resets data</li>
+        <li><strong class="success">✓</strong> Export downloads JSON file</li>
+        <li><strong class="success">✓</strong> Session summary shows correct metrics</li>
+      </ul>
+    </div>
+
+    <div class="test-section">
+      <div class="test-title">🐛 Troubleshooting</div>
+      <ul>
+        <li><strong class="warning">Extension not loading?</strong> Check all files are in the extension directory</li>
+        <li><strong class="warning">No RPM tab?</strong> Refresh DevTools after loading extension</li>
+        <li><strong class="warning">No data appearing?</strong> Make sure the page uses react-performance-monitoring</li>
+        <li><strong class="warning">Build errors?</strong> Run <code>npm run build</code> in the extension directory</li>
+        <li><strong class="error">React errors?</strong> Check console for missing dependencies</li>
+      </ul>
+    </div>
+
+    <div class="test-section">
+      <div class="test-title">📊 Test Data Structure</div>
+      <p>When you interact with the test app, you should see events like:</p>
+      <ul>
+        <li><strong>Interactions:</strong> Button clicks, form inputs</li>
+        <li><strong>Renders:</strong> Component re-renders with duration</li>
+        <li><strong>Network:</strong> API calls to jsonplaceholder.typicode.com</li>
+        <li><strong>Long Tasks:</strong> Heavy computations (if any)</li>
+      </ul>
+    </div>
+
+    <div class="test-section">
+      <div class="test-title">🚀 Next Steps</div>
+      <p>Once tested locally:</p>
+      <ol>
+        <li>Run <code>npm run zip</code> to create distribution package</li>
+        <li>Test the ZIP in a clean Chrome profile</li>
+        <li>Submit to Chrome Web Store when ready</li>
+      </ol>
+    </div>
+  </body>
+</html>

@@ -93,30 +93,75 @@ export const createSessionManager = (
 
       store.setLastInteraction(interaction)
       startSession(interaction)
+
+      // Emit session to DevTools extension
+      if (typeof window !== "undefined" && window.__RPM_DEVTOOLS__) {
+        console.log("RPM: Emitting session to DevTools:", activeSession)
+        window.postMessage({
+          type: "RPM_SESSION",
+          payload: activeSession
+        }, "*")
+      }
     },
     handleRender: render => {
+      console.log("RPM: Session manager handling render", render)
       store.setLatestRender(render)
-      updateActiveSession(session => ({
-        ...session,
-        renders: [...session.renders, render],
-        endTime: render.commitTime
-      }))
+      updateActiveSession(session => {
+        const updatedSession = {
+          ...session,
+          renders: [...session.renders, render],
+          endTime: render.commitTime
+        }
+        // Emit updated session to DevTools
+        if (typeof window !== "undefined" && window.__RPM_DEVTOOLS__) {
+          console.log("RPM: Emitting updated session to DevTools (render):", updatedSession)
+          window.postMessage({
+            type: "RPM_SESSION_UPDATE",
+            payload: updatedSession
+          }, "*")
+        }
+        return updatedSession
+      })
     },
     handleNetwork: network => {
+      console.log("RPM: Session manager handling network", network)
       store.setLatestNetwork(network)
-      updateActiveSession(session => ({
-        ...session,
-        network: [...session.network, network],
-        endTime: network.endTime
-      }))
+      updateActiveSession(session => {
+        const updatedSession = {
+          ...session,
+          network: [...session.network, network],
+          endTime: network.endTime
+        }
+        // Emit updated session to DevTools
+        if (typeof window !== "undefined" && window.__RPM_DEVTOOLS__) {
+          console.log("RPM: Emitting updated session to DevTools (network):", updatedSession)
+          window.postMessage({
+            type: "RPM_SESSION_UPDATE",
+            payload: updatedSession
+          }, "*")
+        }
+        return updatedSession
+      })
     },
     handleLongTask: task => {
+      console.log("RPM: Session manager handling long task", task)
       store.setLatestLongTask(task)
-      updateActiveSession(session => ({
-        ...session,
-        longTasks: [...session.longTasks, task],
-        endTime: task.startTime + task.duration
-      }))
+      updateActiveSession(session => {
+        const updatedSession = {
+          ...session,
+          longTasks: [...session.longTasks, task],
+          endTime: task.startTime + task.duration
+        }
+        // Emit updated session to DevTools
+        if (typeof window !== "undefined" && window.__RPM_DEVTOOLS__) {
+          console.log("RPM: Emitting updated session to DevTools (long task):", updatedSession)
+          window.postMessage({
+            type: "RPM_SESSION_UPDATE",
+            payload: updatedSession
+          }, "*")
+        }
+        return updatedSession
+      })
     },
     handleFPS: fps => {
       store.setFPS(fps)

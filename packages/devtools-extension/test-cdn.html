@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RPM DevTools Extension Test (CDN)</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .status {
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 6px;
+        font-weight: 500;
+      }
+      .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+      .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+      .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+      button {
+        background: #007acc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 14px;
+      }
+      button:hover { background: #005999; }
+      .instructions {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 6px;
+        margin: 20px 0;
+        border-left: 4px solid #007acc;
+      }
+      code {
+        background: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🧪 RPM DevTools Extension Test</h1>
+
+      <div id="extension-status" class="status warning">
+        Checking for RPM DevTools extension...
+      </div>
+
+      <div class="instructions">
+        <h3>Testing Instructions:</h3>
+        <ol>
+          <li>Make sure the RPM DevTools extension is loaded in Chrome</li>
+          <li>Open Chrome DevTools (F12) and click the "RPM" tab</li>
+          <li>Interact with the React app below</li>
+          <li>Watch real-time performance data appear in the DevTools panel</li>
+        </ol>
+      </div>
+
+      <div id="react-root"></div>
+
+      <div class="instructions">
+        <h3>Expected Results:</h3>
+        <ul>
+          <li><strong>Extension Status:</strong> Should show "✅ RPM DevTools extension detected"</li>
+          <li><strong>DevTools Panel:</strong> Should display interaction events, renders, network calls</li>
+          <li><strong>Timeline:</strong> Should show visual timeline of performance events</li>
+          <li><strong>Filters:</strong> Should allow filtering by event type</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Load React from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <div id="app"></div>
+
+    <script>
+      // Test for extension detection
+      function checkExtension() {
+        const statusDiv = document.getElementById('extension-status')
+
+        if (window.__RPM_DEVTOOLS__) {
+          statusDiv.className = 'status success'
+          statusDiv.textContent = '✅ RPM DevTools extension detected! Open DevTools → RPM tab to see performance data.'
+        } else {
+          statusDiv.className = 'status error'
+          statusDiv.textContent = '❌ RPM DevTools extension not detected. Make sure the extension is loaded and this page is refreshed.'
+        }
+      }
+
+      // Check extension on load
+      setTimeout(checkExtension, 500)
+
+      // Create a simple React app for testing
+      const { useState } = React
+
+      function TestApp() {
+        const [count, setCount] = useState(0)
+        const [items, setItems] = useState([])
+
+        const loadData = async () => {
+          const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=3')
+          const data = await response.json()
+          setItems(data)
+        }
+
+        const doHeavyWork = () => {
+          const start = performance.now()
+          while (performance.now() - start < 50) {
+            Math.sqrt(Math.random() * Number.MAX_SAFE_INTEGER)
+          }
+          console.log('Heavy work completed')
+        }
+
+        return React.createElement('div', { style: { padding: '20px', border: '1px solid #ddd', borderRadius: '8px', margin: '20px 0' } },
+          React.createElement('h2', null, 'React Performance Test App'),
+          React.createElement('p', null, 'Use this app to test the RPM DevTools extension.'),
+
+          React.createElement('div', null,
+            React.createElement('button', { onClick: () => setCount(c => c + 1) }, `Counter: ${count}`),
+            React.createElement('button', { onClick: loadData, style: { marginLeft: '10px' } }, 'Load Data'),
+            React.createElement('button', { onClick: doHeavyWork, style: { marginLeft: '10px' } }, 'Heavy Work')
+          ),
+
+          items.length > 0 && React.createElement('ul', null,
+            items.map(item => React.createElement('li', { key: item.id }, item.title))
+          )
+        )
+      }
+
+      // Load RPM from CDN
+      const script = document.createElement('script')
+      script.src = 'https://unpkg.com/react-performance-monitoring@latest/dist/index.js'
+      script.onload = () => {
+        const { DevHUD } = window.ReactPerformanceMonitoring
+
+        const app = React.createElement(TestApp)
+        const wrappedApp = React.createElement(DevHUD, { forceEnabled: true }, app)
+
+        ReactDOM.render(wrappedApp, document.getElementById('app'))
+      }
+      document.head.appendChild(script)
+    </script>
+  </body>
+</html>

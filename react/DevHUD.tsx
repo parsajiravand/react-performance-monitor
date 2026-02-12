@@ -97,18 +97,28 @@ export const DevHUD = ({
 
   useEffect(() => {
     if (!isEnabled) {
+      console.log("RPM: DevHUD not enabled, skipping trackers")
       return
     }
+
+    console.log("RPM: Starting trackers", { trackNetwork, trackLongTasks, trackFPS })
 
     const sessionManager = createSessionManager(store, { sessionTimeout })
     sessionManagerRef.current = sessionManager
 
     const cleanups: TrackerCleanup[] = []
 
-    cleanups.push(createInteractionTracker(interaction => sessionManager.handleInteraction(interaction)))
+    cleanups.push(createInteractionTracker(interaction => {
+      console.log("RPM: Interaction tracked", interaction)
+      sessionManager.handleInteraction(interaction)
+    }))
 
     if (trackNetwork) {
-      const networkTracker = createNetworkTracker(entry => sessionManager.handleNetwork(entry))
+      console.log("RPM: Starting network tracker")
+      const networkTracker = createNetworkTracker(entry => {
+        console.log("RPM: Network entry", entry)
+        sessionManager.handleNetwork(entry)
+      })
       networkTracker.start()
       attachAxiosRef.current = instance => networkTracker.attachAxios(instance)
       cleanups.push(() => {
@@ -120,14 +130,23 @@ export const DevHUD = ({
     }
 
     if (trackLongTasks) {
-      cleanups.push(createLongTaskTracker(task => sessionManager.handleLongTask(task)))
+      console.log("RPM: Starting long task tracker")
+      cleanups.push(createLongTaskTracker(task => {
+        console.log("RPM: Long task", task)
+        sessionManager.handleLongTask(task)
+      }))
     }
 
     if (trackFPS) {
-      cleanups.push(createFPSTracker(fps => sessionManager.handleFPS(fps)))
+      console.log("RPM: Starting FPS tracker")
+      cleanups.push(createFPSTracker(fps => {
+        console.log("RPM: FPS sample", fps)
+        sessionManager.handleFPS(fps)
+      }))
     }
 
     return () => {
+      console.log("RPM: Cleaning up trackers")
       cleanups.forEach(dispose => dispose())
       sessionManagerRef.current?.dispose()
       sessionManagerRef.current = null

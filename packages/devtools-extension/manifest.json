@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "React Performance Monitoring",
+  "version": "1.0.0",
+  "description": "Per-interaction performance profiler for React apps",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "devtools_page": "devtools.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["panel-react.bundle.js", "flag.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_title": "RPM",
+    "default_popup": "popup.html"
+  }
+}

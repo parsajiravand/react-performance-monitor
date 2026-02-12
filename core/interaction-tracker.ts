@@ -98,6 +98,15 @@ const createInteractionEvent =
     }
 
     listener(interaction)
+
+    // Emit to DevTools extension if present
+    if (typeof window !== "undefined" && window.__RPM_DEVTOOLS__) {
+      console.log("RPM: Emitting interaction to DevTools:", interaction)
+      window.postMessage({
+        type: "RPM_INTERACTION",
+        payload: interaction
+      }, "*")
+    }
   }
 
 export const createInteractionTracker = (

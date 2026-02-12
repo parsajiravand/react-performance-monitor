@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RPM Extension</title>
+    <style>
+      body {
+        width: 300px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #f0f0f0;
+        font-size: 12px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #374151;
+      }
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+      }
+      .subtitle {
+        font-size: 11px;
+        color: #9ca3af;
+        margin: 0;
+      }
+      .status {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+      .status--active {
+        background: rgba(74, 222, 128, 0.1);
+        border: 1px solid rgba(74, 222, 128, 0.3);
+        color: #4ade80;
+      }
+      .status--inactive {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+      }
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+        font-size: 12px;
+        text-align: center;
+        transition: background 0.2s;
+      }
+      .btn:hover {
+        background: #1d4ed8;
+      }
+      .btn--secondary {
+        background: #374151;
+      }
+      .btn--secondary:hover {
+        background: #4b5563;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 class="title">RPM</h1>
+      <p class="subtitle">React Performance Monitoring</p>
+    </div>
+
+    <div id="status" class="status status--inactive">
+      Extension loaded
+    </div>
+
+    <div class="actions">
+      <button id="open-devtools" class="btn">Open DevTools (F12)</button>
+      <button id="test-page" class="btn btn--secondary">Open Test Page</button>
+    </div>
+
+    <div class="instructions" style="margin-top: 12px; font-size: 11px; color: #9ca3af; line-height: 1.4;">
+      Tip: Click the button above, then press F12 to open DevTools and find the "RPM" tab.
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
