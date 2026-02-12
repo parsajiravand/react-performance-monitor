@@ -21,21 +21,21 @@ The demo runs at `http://localhost:5174` when started locally. Use the sidebar t
 
 ## 1. Basic Interactions
 
-**Goal:** Interaction grouping, render timings, and simple data fetches.
+**Goal:** Interaction grouping, render timings, and simple data fetches. IDs are resolved automatically from button text, `id`, and `placeholder`—no `data-rpm-id` needed.
 
 ### Actions
 
 - **Load users** – Fetches JSONPlaceholder users; groups network + render events
 - **Filter users** – Type to inspect React render durations in the timeline
+- **Clear filter** (×) – Uses `aria-label` for the HUD label
 - **Refresh order** – Reverses the list; demonstrates repeated renders under the same ID
 
 ### Code snippet
 
 ```tsx
-<button data-rpm-id="basic-load-users" onClick={loadUsers}>
-  Load users
-</button>
-<input data-rpm-id="basic-filter" value={filter} onChange={...} />
+<button onClick={loadUsers}>Load users</button>
+<input id="basic-filter" placeholder="Start typing a name" value={filter} onChange={...} />
+<button aria-label="Clear filter" onClick={() => setFilter("")}>×</button>
 ```
 
 ---

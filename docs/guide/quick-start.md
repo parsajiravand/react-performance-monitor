@@ -40,13 +40,14 @@ Click **Open Timeline** to see a per-event breakdown (renders, network, long tas
 
 ## Tagging Interactions
 
-By default, interaction IDs fall back to element `id` or tag name. For clearer labels, add `data-rpm-id` or `data-rpm-group`:
+Interaction IDs are resolved automatically from button text, `id`, `aria-label`, `placeholder`, `data-testid`, or `name`. No attributes required:
 
 ```tsx
-<button data-rpm-id="load-users">Load users</button>
+<button>Load users</button>
+<input id="search-filter" placeholder="Search..." />
 ```
 
-See [Tracking Tags](/guide/tracking-tags) for details.
+For explicit labels, use `data-rpm-id` or `data-rpm-group`. See [Tracking Tags](/guide/tracking-tags) for the full resolution order.
 
 ## Next Steps
 

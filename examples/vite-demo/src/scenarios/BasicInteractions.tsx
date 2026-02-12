@@ -42,29 +42,25 @@ const BasicInteractions = (_props: ScenarioComponentProps) => {
   }, [users, filter])
 
   return (
-    <div className="scenario-panel" data-rpm-group="basic-interactions">
+    <div className="scenario-panel">
       <header>
         <h2>Basic Interactions</h2>
         <p>
           Demonstrates how user input, component renders, and simple fetch calls are grouped into
-          interaction sessions. Try the actions below and inspect the HUD timeline.
+          interaction sessions. IDs are resolved automatically from button text, <code>id</code>, or{" "}
+          <code>placeholder</code>—no <code>data-rpm-id</code> needed. Try the actions below and
+          inspect the HUD timeline.
         </p>
       </header>
 
       <section className="control-strip">
-        <button
-          type="button"
-          data-rpm-id="basic-load-users"
-          disabled={loading}
-          onClick={loadUsers}
-        >
+        <button type="button" disabled={loading} onClick={loadUsers}>
           {loading ? "Loading…" : "Load users"}
         </button>
         <label htmlFor="basic-filter">
           Filter users
           <input
             id="basic-filter"
-            data-rpm-id="basic-filter"
             placeholder="Start typing a name"
             value={filter}
             onChange={event => setFilter(event.target.value)}
@@ -73,7 +69,14 @@ const BasicInteractions = (_props: ScenarioComponentProps) => {
         </label>
         <button
           type="button"
-          data-rpm-id="basic-refresh"
+          aria-label="Clear filter"
+          disabled={!filter}
+          onClick={() => setFilter("")}
+        >
+          ×
+        </button>
+        <button
+          type="button"
           disabled={!users.length}
           onClick={() => setUsers(prev => [...prev].reverse())}
         >

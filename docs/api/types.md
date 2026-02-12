@@ -15,7 +15,7 @@ interface Interaction {
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `id` | `string` | Resolved from `data-rpm-id`, `data-rpm-group`, `id`, or tag name |
+| `id` | `string` | Resolved from `data-rpm-id`, `data-rpm-group`, `id`, `aria-label`, `placeholder`, `data-testid`, `name`, button/link text, or tag name (see [Tracking Tags](/guide/tracking-tags)) |
 | `type` | `string` | Event type: `"click"`, `"input"`, `"submit"` |
 | `startTime` | `number` | `performance.now()` when the event fired |
 | `endTime` | `number?` | Optional; set when session closes |

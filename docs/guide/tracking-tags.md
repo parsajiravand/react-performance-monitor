@@ -1,6 +1,21 @@
 # Tracking Tags
 
-Assign human-friendly identifiers to interactive elements so the HUD shows meaningful labels instead of generic fallbacks.
+Assign human-friendly identifiers to interactive elements so the HUD shows meaningful labels. You can use `data-rpm-id` / `data-rpm-group` explicitly, or rely on **automatic resolution** from common attributes and content.
+
+## Automatic Resolution (No Attributes Required)
+
+The tracker resolves interaction IDs from many sources without requiring `data-rpm-id`:
+
+| Source | Example |
+|--------|---------|
+| Button/link text | `<button>Load users</button>` → `"Load users"` |
+| `id` | `<input id="search-filter" />` → `"search-filter"` |
+| `aria-label` | `<button aria-label="Close">×</button>` → `"Close"` |
+| `placeholder` | `<input placeholder="Search..." />` → `"Search..."` |
+| `data-testid` | `<button data-testid="submit-btn">Submit</button>` → `"submit-btn"` |
+| `name` (form controls) | `<input name="email" />` → `"email"` |
+
+Labels are truncated to 30 characters. If none match, the element `tagName` is used (`button`, `input`, etc.).
 
 ## data-rpm-id
 
@@ -33,7 +48,12 @@ When an interaction occurs, the tracker resolves the ID in this order:
 1. **Closest `[data-rpm-id]`** – Nearest ancestor (or self) with `data-rpm-id`
 2. **Closest `[data-rpm-group]`** – Nearest ancestor (or self) with `data-rpm-group`
 3. **Element `id`** – The interacted element’s `id` attribute
-4. **Tag name** – Fallback to `button`, `input`, `form`, etc.
+4. **`aria-label`** – Accessible label
+5. **`placeholder`** – For `input` / `textarea`
+6. **`data-testid`** – Common test identifier
+7. **`name`** – For `input`, `select`, `textarea`
+8. **Button/link text** – For `button`, `a`, `[role="button"]`, etc.
+9. **Tag name** – Fallback to `button`, `input`, `form`, etc.
 
 ## Capture Phase
 
@@ -53,6 +73,7 @@ Interactions inside React portals (e.g. modals) are still captured. The portal�
 
 ## Best Practices
 
-- Use short, descriptive IDs: `load-users`, `filter-list`, `submit-form`
-- Prefer `data-rpm-id` for specific controls and `data-rpm-group` for sections
-- Avoid dynamic or random values; keep IDs stable for easier debugging
+- **Prefer automatic resolution** – Use `id`, `aria-label`, `placeholder`, or button text when possible; no extra attributes needed
+- Use `data-rpm-id` when you need an explicit label that differs from the visible text
+- Use `data-rpm-group` for section-level grouping when individual control labels don't matter
+- Use short, descriptive values; avoid dynamic or random values for easier debugging

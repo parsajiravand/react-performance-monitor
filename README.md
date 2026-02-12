@@ -50,11 +50,12 @@ function AppRoot() {
 
 ### Tracking tags
 
-Assign human-friendly identifiers to interactive elements:
+IDs are resolved automatically from button text, `id`, `aria-label`, `placeholder`, `data-testid`, or `name`. For explicit labels, use:
 
 ```tsx
-<button data-rpm-id="load-users">Load users</button>
-<div data-rpm-group="auth-flow"> … </div>
+<button>Load users</button>
+<input id="search-filter" placeholder="Search..." />
+<button data-rpm-id="custom-label">Submit</button>
 ```
 
 ### Axios integration

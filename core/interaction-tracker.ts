@@ -12,6 +12,34 @@ export interface InteractionTrackerOptions {
 const isElement = (target: EventTarget | null): target is Element =>
   !!target && target instanceof Element
 
+const MAX_LABEL_LENGTH = 30
+
+const truncate = (s: string): string =>
+  s.trim().slice(0, MAX_LABEL_LENGTH).replace(/\s+/g, " ")
+
+const getAttr = (el: Element, name: string): string | null => {
+  const v = el.getAttribute(name)
+  return v && v.trim() ? v.trim() : null
+}
+
+const getTextContent = (el: Element): string | null => {
+  const text = el.textContent?.trim()
+  if (!text) return null
+  return truncate(text)
+}
+
+const isLabeledControl = (el: Element): boolean => {
+  const tag = el.tagName
+  const role = el.getAttribute("role")
+  return (
+    tag === "BUTTON" ||
+    tag === "A" ||
+    role === "button" ||
+    role === "menuitem" ||
+    role === "tab"
+  )
+}
+
 const resolveInteractionId = (target: EventTarget | null): string => {
   if (!isElement(target)) {
     return "unknown"
@@ -29,6 +57,32 @@ const resolveInteractionId = (target: EventTarget | null): string => {
 
   if (target.id) {
     return target.id
+  }
+
+  const el = target as HTMLElement
+
+  const ariaLabel = getAttr(el, "aria-label")
+  if (ariaLabel) return truncate(ariaLabel)
+
+  const placeholder = getAttr(el, "placeholder")
+  if (placeholder && (el.tagName === "INPUT" || el.tagName === "TEXTAREA")) {
+    return truncate(placeholder)
+  }
+
+  const testId = getAttr(el, "data-testid")
+  if (testId) return truncate(testId)
+
+  const name = getAttr(el, "name")
+  if (
+    name &&
+    (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA")
+  ) {
+    return truncate(name)
+  }
+
+  if (isLabeledControl(el)) {
+    const text = getTextContent(el)
+    if (text) return text
   }
 
   return target.tagName.toLowerCase()
