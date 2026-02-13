@@ -12,13 +12,14 @@ const Panel = () => {
   const [currentSession, setCurrentSession] = useState(null);
   const [filter, setFilter] = useState("all"); // all, interactions, renders, network, longtasks
   const [isRecording, setIsRecording] = useState(true);
-  const [maxItems, setMaxItems] = useState(50);
+  const [maxItems] = useState(50);
   const [showInfo, setShowInfo] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
 
   // Connect to background service worker
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     const port = chrome.runtime.connect({ name: "rpm-devtools" });
 
     port.onMessage.addListener((message) => {
@@ -39,7 +40,6 @@ const Panel = () => {
         );
       } else if (message.type === "RPM_RENDER" && message.payload) {
         // Handle render events
-        console.log("Render:", message.payload);
         setCurrentSession((current) => {
           if (!current) return current;
           const updated = {
@@ -57,7 +57,6 @@ const Panel = () => {
         });
       } else if (message.type === "RPM_NETWORK" && message.payload) {
         // Handle network events
-        console.log("Network:", message.payload);
         setCurrentSession((current) => {
           if (!current) return current;
           const updated = {
@@ -75,7 +74,6 @@ const Panel = () => {
         });
       } else if (message.type === "RPM_LONG_TASK" && message.payload) {
         // Handle long task events
-        console.log("Long task:", message.payload);
         setCurrentSession((current) => {
           if (!current) return current;
           const updated = {
@@ -255,7 +253,7 @@ const Panel = () => {
                 marginTop: "1px",
               }}
             >
-              DevTools
+              DevTools v0.1.4
             </div>
           </div>
           <div
@@ -488,7 +486,7 @@ const Panel = () => {
               >
                 Real-time performance profiling for React applications. Track
                 interactions, renders, network requests, and long tasks to
-                optimize your app's performance.
+                optimize your app&apos;s performance.
               </p>
               <div style={{ display: "flex", gap: "12px", fontSize: "12px" }}>
                 <a

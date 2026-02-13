@@ -41,8 +41,6 @@ function autoAssignRPMIds() {
 
 // Initialize RPM in DevTools mode
 function initDevToolsMode() {
-  console.log('RPM DevTools: Initializing in DevTools mode...')
-
   // Set the DevTools flag so RPM knows extension is present
   window.__RPM_DEVTOOLS__ = true
 
@@ -54,14 +52,10 @@ function initDevToolsMode() {
 
   // Set up enhanced tracking that mimics full RPM
   setupEnhancedTracking()
-
-  console.log('RPM DevTools: DevTools mode initialized successfully')
 }
 
 // Enhanced tracking that mimics full RPM functionality
 function setupEnhancedTracking() {
-  console.log('RPM DevTools: Setting up enhanced tracking...')
-
   // Track interactions (enhanced version)
   function trackInteraction(event) {
     const target = event.target
@@ -87,8 +81,6 @@ function setupEnhancedTracking() {
       element: element.tagName.toLowerCase(),
       timestamp: Date.now()
     }
-
-    console.log('RPM DevTools: Interaction tracked', interaction)
 
     // Create a session-like object for this interaction
     const sessionData = {
@@ -132,8 +124,6 @@ function setupEnhancedTracking() {
       phase: 'update'
     }
 
-    console.log('RPM DevTools: Render tracked', render)
-
     // Send render update
     window.postMessage({
       type: "RPM_RENDER",
@@ -176,14 +166,12 @@ function setupEnhancedTracking() {
           endTime: performance.now()
         }
 
-        console.log('RPM DevTools: Network tracked', networkEntry)
-
         window.postMessage({
           type: "RPM_NETWORK",
           payload: networkEntry
         }, "*")
-      }).catch(error => {
-        console.log('RPM DevTools: Network error', error)
+      }).catch(() => {
+        // Network error occurred, but we don't log it to keep console clean
       })
 
       return promise
@@ -208,8 +196,6 @@ function setupEnhancedTracking() {
           startTime: lastTaskEnd,
           attribution: [{ name: 'script' }]
         }
-
-        console.log('RPM DevTools: Long task tracked', longTask)
 
         window.postMessage({
           type: "RPM_LONG_TASK",
@@ -263,8 +249,6 @@ function setupEnhancedTracking() {
 
   // Track long tasks
   trackLongTasks()
-
-  console.log('RPM DevTools: Enhanced tracking setup complete')
 }
 
 // Make functions available globally

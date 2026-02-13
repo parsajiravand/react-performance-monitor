@@ -11,8 +11,8 @@ chrome.runtime.onConnect.addListener((port) => {
       devtoolsPort = null
     })
 
-    port.onMessage.addListener((message) => {
-      console.log("DevTools panel message:", message)
+    port.onMessage.addListener(() => {
+      // DevTools panel message received
     })
   }
 })
@@ -22,7 +22,6 @@ chrome.runtime.onMessage.addListener((message, sender) => {
   // Get tab ID safely
   const tabId = sender.tab?.id
   if (!tabId) {
-    console.log("Message received without tab ID:", message)
     return
   }
 
