@@ -16,6 +16,8 @@ const Panel = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [historyExpanded, setHistoryExpanded] = useState(false);
 
   // Connect to background service worker
   useEffect(() => {
@@ -99,6 +101,14 @@ const Panel = () => {
 
     return () => port.disconnect();
   }, [maxItems]);
+
+  // Show loading screen for 0.5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredItems = useMemo(() => {
     if (!currentSession) return [];
@@ -190,6 +200,29 @@ const Panel = () => {
     URL.revokeObjectURL(url);
   };
 
+  // Show loading screen with logo for 0.5 seconds
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%)",
+        }}
+      >
+        <img
+          src="logo.png"
+          alt="RPM Logo"
+          style={{
+            width: "100%",
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
@@ -214,24 +247,12 @@ const Panel = () => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <div
-            style={{
-              width: "24px",
-              height: "24px",
-              background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
-              borderRadius: "6px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 2px 8px rgba(59, 130, 246, 0.3)",
-            }}
-          >
-            <span
-              style={{ fontSize: "12px", fontWeight: "bold", color: "white" }}
-            >
-              ⚡
-            </span>
-          </div>
+          <img
+            src="logo.png"
+            alt="RPM"
+            style={{ width: "24px", height: "24px" }}
+          />
+
           <div>
             <h1
               style={{
@@ -761,7 +782,7 @@ const Panel = () => {
                 border: "1px solid rgba(75, 85, 99, 0.3)",
                 overflow: "hidden",
                 boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)",
-                marginTop:"10px"
+                marginTop: "10px",
               }}
             >
               <div
@@ -906,6 +927,7 @@ const Panel = () => {
                 padding: "12px",
                 marginBottom: "12px",
                 boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)",
+                marginTop: "10px",
               }}
             >
               {u({
@@ -920,6 +942,116 @@ const Panel = () => {
           </div>
         )}
       </div>
+
+      {/* History Section */}
+      {sessions.length > 0 && (
+        <div
+          style={{
+            padding: "8px 12px",
+            background: "rgba(30, 30, 46, 0.6)",
+            backdropFilter: "blur(10px)",
+            borderTop: "1px solid rgba(75, 85, 99, 0.3)",
+            marginTop: "8px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer",
+              padding: "4px 0",
+            }}
+            onClick={() => setHistoryExpanded(!historyExpanded)}
+          >
+            <h3
+              style={{
+                margin: 0,
+                fontSize: "11px",
+                fontWeight: "500",
+                color: "#e2e8f0",
+              }}
+            >
+              📚 History ({sessions.length})
+            </h3>
+            <div
+              style={{
+                fontSize: "10px",
+                color: "#9ca3af",
+                transform: historyExpanded ? "rotate(90deg)" : "rotate(0deg)",
+                transition: "transform 0.2s ease",
+              }}
+            >
+              ▶
+            </div>
+          </div>
+          {historyExpanded && (
+            <div
+              style={{
+                maxHeight: "120px",
+                overflow: "auto",
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+                marginTop: "8px",
+              }}
+            >
+            {sessions.slice(0, 10).map((session, index) => (
+              <div
+                key={session.id}
+                style={{
+                  padding: "6px 8px",
+                  background: "rgba(15, 23, 42, 0.6)",
+                  borderRadius: "4px",
+                  border: "1px solid rgba(75, 85, 99, 0.3)",
+                  fontSize: "9px",
+                  color: "#cbd5e1",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(59, 130, 246, 0.1)";
+                  e.currentTarget.style.borderColor = "rgba(59, 130, 246, 0.5)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(15, 23, 42, 0.6)";
+                  e.currentTarget.style.borderColor = "rgba(75, 85, 99, 0.3)";
+                }}
+                onClick={() => setCurrentSession(session)}
+                title={`Click to view session: ${session.interaction?.id || session.id}`}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ fontWeight: "500" }}>
+                    {session.interaction?.id || `Session ${index + 1}`}
+                  </div>
+                  <div style={{ color: "#9ca3af", fontSize: "8px" }}>
+                    {session.renders.length}R • {session.network.length}N • {session.longTasks.length}T
+                  </div>
+                </div>
+                <div style={{ color: "#9ca3af", fontSize: "8px", marginTop: "2px" }}>
+                  {new Date(session.startTime).toLocaleTimeString()}
+                  {session.endTime && (
+                    <span> • {(session.endTime - session.startTime).toFixed(0)}ms</span>
+                  )}
+                </div>
+              </div>
+            ))}
+            {sessions.length > 10 && (
+              <div
+                style={{
+                  padding: "4px 8px",
+                  fontSize: "8px",
+                  color: "#9ca3af",
+                  textAlign: "center",
+                }}
+              >
+                ... and {sessions.length - 10} more sessions
+              </div>
+            )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
