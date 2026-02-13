@@ -18,7 +18,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["panel-react.bundle.js", "flag.js"],
+      "resources": ["panel-react.bundle.js", "flag.js", "rpm-core.bundle.js"],
       "matches": ["<all_urls>"]
     }
   ],

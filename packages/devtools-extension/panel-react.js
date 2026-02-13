@@ -29,9 +29,54 @@ const Panel = () => {
         setSessions(prev => prev.map(session =>
           session.id === message.payload.id ? message.payload : session
         ))
-      } else if (message.type === "RPM_INTERACTION" && message.payload) {
-        // Handle individual interactions if needed
-        console.log("Interaction:", message.payload)
+      } else if (message.type === "RPM_RENDER" && message.payload) {
+        // Handle render events
+        console.log("Render:", message.payload)
+        setCurrentSession(current => {
+          if (!current) return current
+          const updated = {
+            ...current,
+            renders: [...current.renders, message.payload],
+            endTime: Math.max(current.endTime, message.payload.commitTime)
+          }
+          // Update in sessions array too
+          setSessions(prev => prev.map(session =>
+            session.id === current.id ? updated : session
+          ))
+          return updated
+        })
+      } else if (message.type === "RPM_NETWORK" && message.payload) {
+        // Handle network events
+        console.log("Network:", message.payload)
+        setCurrentSession(current => {
+          if (!current) return current
+          const updated = {
+            ...current,
+            network: [...current.network, message.payload],
+            endTime: Math.max(current.endTime, message.payload.endTime)
+          }
+          // Update in sessions array too
+          setSessions(prev => prev.map(session =>
+            session.id === current.id ? updated : session
+          ))
+          return updated
+        })
+      } else if (message.type === "RPM_LONG_TASK" && message.payload) {
+        // Handle long task events
+        console.log("Long task:", message.payload)
+        setCurrentSession(current => {
+          if (!current) return current
+          const updated = {
+            ...current,
+            longTasks: [...current.longTasks, message.payload],
+            endTime: Math.max(current.endTime, message.payload.startTime + message.payload.duration)
+          }
+          // Update in sessions array too
+          setSessions(prev => prev.map(session =>
+            session.id === current.id ? updated : session
+          ))
+          return updated
+        })
       }
     })
 

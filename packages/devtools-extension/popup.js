@@ -28,12 +28,20 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => window.close(), 100)
   })
 
-  // Open test page
-  testPageBtn.addEventListener("click", () => {
-    const testPageUrl = chrome.runtime.getURL("test-quick.html")
-    chrome.tabs.create({ url: testPageUrl })
-    window.close() // Close popup
-  })
+            // Open test page
+            testPageBtn.addEventListener("click", () => {
+              const testPageUrl = chrome.runtime.getURL("test-no-rpm.html")
+              chrome.tabs.create({ url: testPageUrl })
+              window.close() // Close popup
+            })
+
+            // Open debug page
+            const debugPageBtn = document.getElementById("debug-page")
+            debugPageBtn.addEventListener("click", () => {
+              const debugPageUrl = chrome.runtime.getURL("debug-react.html")
+              chrome.tabs.create({ url: debugPageUrl })
+              window.close() // Close popup
+            })
 
   // Listen for messages from content script
   chrome.runtime.onMessage.addListener((message, sender) => {

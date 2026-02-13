@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React Detection Debugger</title>
+    <script>
+        // Debug script to check React detection
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                console.log('=== REACT DETECTION DEBUG ===');
+                console.log('window.React:', !!window.React, window.React?.version);
+                console.log('window.ReactDOM:', !!window.ReactDOM);
+                console.log('window.React.createElement:', !!(window.React && window.React.createElement));
+                console.log('window.React.createRoot:', !!(window.React && window.React.createRoot));
+                console.log('window.ReactDOM.createRoot:', !!(window.ReactDOM && window.ReactDOM.createRoot));
+                console.log('window.ReactDOM.render:', !!(window.ReactDOM && window.ReactDOM.render));
+
+                console.log('React DevTools:', !!window.__REACT_DEVTOOLS_GLOBAL_HOOK__);
+                console.log('Redux DevTools:', !!window.__REDUX_DEVTOOLS_EXTENSION__);
+                console.log('Next.js:', !!window.next);
+                console.log('Nuxt.js:', !!window.__NUXT__);
+
+                const reactElements = document.querySelectorAll('[data-reactroot], [data-react-helmet], [data-reactid], [data-react-checksum]');
+                console.log('React DOM elements:', reactElements.length);
+
+                const rootElements = document.querySelectorAll('#root, #app, #__next, #__nuxt, .App, .app');
+                console.log('Root elements:', rootElements.length, Array.from(rootElements).map(el => el.id || el.className));
+
+                const jsxElements = document.querySelectorAll('[data-testid], [data-cy], [data-qa], [aria-label]');
+                console.log('JSX-like elements:', jsxElements.length);
+
+                const reactScripts = document.querySelectorAll('script[src*="react"], script[src*="bundle"]');
+                console.log('React scripts:', reactScripts.length, Array.from(reactScripts).map(s => s.src));
+
+                console.log('URL:', window.location.href);
+                console.log('=== END DEBUG ===');
+            }, 2000);
+        });
+    </script>
+</head>
+<body>
+    <h1>React Detection Debugger</h1>
+    <p>Open console to see React detection info</p>
+    <p>This will help debug why RPM extension isn't detecting React</p>
+</body>
+</html>

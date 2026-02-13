@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test App Without RPM</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        // Simple React app without RPM
+        const { useState } = React
+
+        function App() {
+            const [count, setCount] = useState(0)
+
+            return React.createElement('div', null,
+                React.createElement('h1', null, 'Test App (No RPM)'),
+                React.createElement('p', null, 'This app does not use react-performance-monitor'),
+                React.createElement('button', {
+                    onClick: () => setCount(c => c + 1)
+                }, `Count: ${count}`),
+                React.createElement('button', {
+                    onClick: () => fetch('https://jsonplaceholder.typicode.com/users').then(r => r.json()).then(console.log)
+                }, 'Fetch Data')
+            )
+        }
+
+        ReactDOM.render(React.createElement(App), document.getElementById('root'))
+    </script>
+</body>
+</html>

@@ -2,10 +2,13 @@ const path = require('path')
 
 module.exports = {
   mode: 'production',
-  entry: './panel-react.js',
+  entry: {
+    'panel-react': './panel-react.js',
+    'rpm-core': './rpm-core-entry.js'
+  },
   output: {
     path: path.resolve(__dirname),
-    filename: 'panel-react.bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
