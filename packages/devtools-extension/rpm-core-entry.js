@@ -114,14 +114,14 @@ function setupEnhancedTracking() {
   let renderCount = 0
   function trackRender() {
     const now = performance.now()
-    // Throttle renders to max 1 per 100ms to prevent spam
-    if (now - lastRenderTime < 100) return
+    // Throttle renders to max 1 per 16ms (roughly 60fps) to prevent spam
+    if (now - lastRenderTime < 16) return
 
     lastRenderTime = now
     renderCount++
 
-    // Only track significant renders (not every tiny DOM change)
-    if (renderCount > 10) return // Limit total renders per session
+    // Allow more renders per session for better monitoring
+    if (renderCount > 100) return // Increased limit for comprehensive monitoring
 
     const render = {
       component: 'PageUpdate',
@@ -232,7 +232,7 @@ function setupEnhancedTracking() {
   document.addEventListener('focus', trackInteraction, true)
   document.addEventListener('blur', trackInteraction, true)
 
-  // Track DOM mutations as "renders" - only major changes
+  // Track DOM mutations as "renders" - capture more render events
   let mutationCount = 0
   const observer = new MutationObserver((mutations) => {
     // Only track if there are significant mutations (not tiny attribute changes)
@@ -243,8 +243,8 @@ function setupEnhancedTracking() {
 
     if (significantMutations.length > 0) {
       mutationCount++
-      // Throttle: only track every 3rd significant mutation
-      if (mutationCount % 3 === 0) {
+      // Track more frequently: every significant mutation instead of every 3rd
+      if (mutationCount % 1 === 0) { // Track all significant mutations
         trackRender()
       }
     }
